@@ -32,6 +32,22 @@
 #define realloc xrealloc
 #endif
 
+/* Beggining of changes for see-sqlite  */
+#ifndef SQLITE_API
+# define SQLITE_API
+#endif
+
+#ifndef SEEN_ENABLE_SEE
+#define SEEN_ENABLE_SEE 1
+static int encryptionEnabled = 1;
+SQLITE_API void sqlite3_activate_see(const char *zPassPhrase){
+  encryptionEnabled = 1;
+}
+
+static int sqlite3CheckForTizen(void){ return 0; }
+#endif
+/* End of changes for see-sqlite  */
+
 /* other changes to work with totalcross:
 
 0. On top of sqlite3.c: 
