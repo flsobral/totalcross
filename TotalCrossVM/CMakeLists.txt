@@ -556,6 +556,7 @@ if(DEFINED SDL2_LIBRARY)
   target_link_libraries(tcvm ${SDL2_LIBRARY})
 endif(DEFINED SDL2_LIBRARY)
 
+add_definitions(-DSQLITE_HAS_CODEC)
 target_link_libraries(tcvm SQLite3)
 
 if(DEFINED ANDROID_ABI)

@@ -18,15 +18,17 @@ set(${PROJECT_NAME}_YEAR 2016)
 set(${PROJECT_NAME}_HOMEPAGE_URL https://sqlite.org)
 
 # Place a dummy source at configuration time
-if(NOT EXISTS "${CMAKE_CURRENT_BINARY_DIR}/src/sqlite3.c")
-    configure_file(sqlite3_tc.h src/sqlite3.c)
+if(NOT EXISTS "${CMAKE_CURRENT_BINARY_DIR}/src/sqlite-see.c")
+    configure_file(sqlite3_tc.h src/sqlite-see.c)
 endif()
 
 ExternalProject_Add(SQLite3Download
-    URL ${SQLite3_HOMEPAGE_URL}/${SQLite3_YEAR}/sqlite-amalgamation-${SQLite3_VERSION_MAJOR}${SQLite3_VERSION_MINOR}${SQLite3_VERSION_PATCH}${SQLite3_VERSION_TWEAK}00.zip
+    URL $ENV{URL_SEE_31300}
+    HTTP_USERNAME $ENV{URL_SEE_USER}
+    HTTP_PASSWORD $ENV{URL_SEE_PASS}
     SOURCE_DIR "${CMAKE_CURRENT_BINARY_DIR}/src"
     UPDATE_COMMAND ""
-    PATCH_COMMAND patch -p0 <  ${CMAKE_CURRENT_LIST_DIR}/sqlite3tc.patch
+    PATCH_COMMAND patch -p0 <  ${CMAKE_CURRENT_LIST_DIR}/sqlite3tc.patch && cat sqlite3.c see.c > sqlite-see.c
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
@@ -44,5 +46,5 @@ target_include_directories(SQLite3 INTERFACE
     ${CMAKE_CURRENT_LIST_DIR}
 )
 target_sources(SQLite3 INTERFACE 
-    "${CMAKE_CURRENT_BINARY_DIR}/src/sqlite3.c"
+    "${CMAKE_CURRENT_BINARY_DIR}/src/sqlite-see.c"
 )
